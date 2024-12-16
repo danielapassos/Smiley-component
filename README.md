@@ -45,7 +45,7 @@ yarn dev
 
 1. Import the component:
 ```typescript
-import TeamProfile from '@/components/TeamProfile';
+import FlippingCircles from '@/components/FlippingCircles';
 ```
 
 2. Use it in your project:
