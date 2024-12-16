@@ -1,36 +1,136 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Interactive Team Profile Component
 
-## Getting Started
+A playful and engaging way to showcase team members using interactive smiley faces that flip to reveal profile photos. Built with Next.js, Framer Motion, and Tailwind CSS.
 
-First, run the development server:
+![Team Profile Demo](public/demo.gif)
 
+## Features
+
+- 🎭 Interactive flip animations with 3D transforms
+- 🌊 Coordinated wave-like motion effects
+- 🎨 Clean, minimal design with customizable styling
+- 📱 Fully responsive across all devices
+- ⚡ Optimized performance with Next.js
+- 🖼️ Progressive image loading
+
+## Demo
+
+[Live Demo](https://smiley-one.vercel.app/)
+
+## Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/danielapassos/Smiley-component
+cd Smiley-component
+```
+
+2. Install dependencies:
+```bash
+npm install
+# or
+yarn install
+```
+
+3. Add your team photos to the `public` directory
+
+4. Start the development server:
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Usage
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Import the component:
+```typescript
+import TeamProfile from '@/components/TeamProfile';
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+2. Use it in your project:
+```typescript
+<TeamProfile
+  members={[
+    {
+      id: 1,
+      name: "Team Member 1",
+      photo: "/member1.jpg"
+    },
+    // Add more team members...
+  ]}
+/>
+```
 
-## Learn More
+## Configuration
 
-To learn more about Next.js, take a look at the following resources:
+### Props
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| Prop | Type | Description | Default |
+|------|------|-------------|---------|
+| `members` | `Member[]` | Array of team member objects | `[]` |
+| `circleSize` | `number` | Size of circles in pixels | `150` |
+| `spacing` | `number` | Space between circles in pixels | `18` |
+| `backgroundColor` | `string` | Color of smiley faces | `#D0FF00` |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Types
 
-## Deploy on Vercel
+```typescript
+interface Member {
+  id: number;
+  name: string;
+  photo: string;
+}
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Technical Details
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Animation System
+
+The component uses a coordinated animation system where:
+- Clicked circles rise and flip
+- Adjacent circles move downward
+- Movement intensity decreases with distance
+- Spring physics create natural motion
+
+Key animation code:
+```typescript
+const getYOffset = (index: number) => {
+    if (activeIndex === null) return 0;
+    const distance = Math.abs(index - activeIndex);
+    
+    if (distance === 0) return -20;     // Up
+    if (distance === 1) return 15;      // Down
+    if (distance === 2) return 5;       // Slight
+    return 0;                           // Still
+};
+```
+
+### Performance Considerations
+
+- Uses CSS `backface-visibility` for smooth flips
+- Implements `transform-style: preserve-3d` for proper 3D
+- Optimizes images with Next.js Image component
+- Manages state efficiently with React hooks
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch: `git checkout -b feature/AmazingFeature`
+3. Commit your changes: `git commit -m 'Add some AmazingFeature'`
+4. Push to the branch: `git push origin feature/AmazingFeature`
+5. Open a pull request
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+
+## Acknowledgments
+
+- Built with [Next.js](https://nextjs.org/)
+- Animations powered by [Framer Motion](https://www.framer.com/motion/)
+- Styled with [Tailwind CSS](https://tailwindcss.com/)
+
+## Contact
+
+Your Name - [@danizeres](https://x.com/danizeres)
